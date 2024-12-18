@@ -1,6 +1,14 @@
-import {useTranslations} from 'next-intl';
+import {getTranslations, setRequestLocale} from 'next-intl/server';
 
-export default function IndexPage() {
-  const t = useTranslations('IndexPage');
+type Props = {
+  params: Promise<{locale: string}>;
+}
+
+export default async function IndexPage({params}: Props) {
+  const {locale} = await params
+  setRequestLocale(locale)
+
+  const t = await getTranslations('IndexPage');
+
   return <h1>{t('title')}</h1>;
 }
